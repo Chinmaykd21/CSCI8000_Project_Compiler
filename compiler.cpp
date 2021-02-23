@@ -49,25 +49,59 @@ int main(int argc, char **argv)
                     int c = intermediate.find("(");
                     indexes.push_back(c);
                     flag = false;
-                    int l = intermediate.length();
+                    //cout << "subintermediate: " << subintermediate << endl ;
+                    string subintermediate = intermediate.substr(c + 1, intermediate.size());
+                    while (subintermediate.find("(") != std::string::npos)
+                    {
+                        int s = subintermediate.find("(");
+                        indexes.push_back(c + 1 + s);
+                        subintermediate = subintermediate.substr(s + 1, intermediate.size());
+                    }
+                    //cout << endl ;
+                    /*cout << "indexes: " << endl;
+                    for (int i = 0; i < indexes.size(); i++)
+                        cout << indexes[i] << ",";
+                    cout << endl;   */
                 }
+
                 if (intermediate.find("=") != std::string::npos)
                 {
                     int c = intermediate.find("=");
                     indexes.push_back(c);
                     flag = false;
+                    string subintermediate = intermediate.substr(c + 1, intermediate.size());
+                    while (subintermediate.find("=") != std::string::npos)
+                    {
+                        int s = subintermediate.find("=");
+                        indexes.push_back(c + 1 + s);
+                        subintermediate = subintermediate.substr(s + 1, intermediate.size());
+                    }
                 }
                 if (intermediate.find("+") != std::string::npos)
                 {
                     int c = intermediate.find("+");
                     indexes.push_back(c);
                     flag = false;
+                    string subintermediate = intermediate.substr(c + 1, intermediate.size());
+                    while (subintermediate.find("+") != std::string::npos)
+                    {
+                        int s = subintermediate.find("+");
+                        indexes.push_back(c + 1 + s);
+                        subintermediate = subintermediate.substr(s + 1, intermediate.size());
+                    }
                 }
                 if (intermediate.find("-") != std::string::npos)
                 {
                     int c = intermediate.find("-");
                     indexes.push_back(c);
                     flag = false;
+                    string subintermediate = intermediate.substr(c + 1, intermediate.size());
+                    while (subintermediate.find("-") != std::string::npos)
+                    {
+                        int s = subintermediate.find("-");
+                        indexes.push_back(c + 1 + s);
+                        subintermediate = subintermediate.substr(s + 1, intermediate.size());
+                    }
                 }
 
                 if (intermediate.find("/") != std::string::npos)
@@ -75,36 +109,99 @@ int main(int argc, char **argv)
                     int c = intermediate.find("/");
                     indexes.push_back(c);
                     flag = false;
+                    string subintermediate = intermediate.substr(c + 1, intermediate.size());
+                    while (subintermediate.find("/") != std::string::npos)
+                    {
+                        int s = subintermediate.find("/");
+                        indexes.push_back(c + 1 + s);
+                        subintermediate = subintermediate.substr(s + 1, intermediate.size());
+                    }
                 }
                 if (intermediate.find(")") != std::string::npos)
                 {
                     int c = intermediate.find(")");
                     indexes.push_back(c);
                     flag = false;
+                    string subintermediate = intermediate.substr(c + 1, intermediate.size());
+                    while (subintermediate.find(")") != std::string::npos)
+                    {
+                        int s = subintermediate.find(")");
+                        indexes.push_back(c + 1 + s);
+                        subintermediate = subintermediate.substr(s + 1, intermediate.size());
+                    }
                 }
                 if (intermediate.find(",") != std::string::npos)
                 {
                     int c = intermediate.find(",");
                     indexes.push_back(c);
                     flag = false;
+                    string subintermediate = intermediate.substr(c + 1, intermediate.size());
+                    while (subintermediate.find(",") != std::string::npos)
+                    {
+                        int s = subintermediate.find(",");
+                        indexes.push_back(c + 1 + s);
+                        subintermediate = subintermediate.substr(s + 1, intermediate.size());
+                    }
                 }
                 if (intermediate.find(";") != std::string::npos)
                 {
                     int c = intermediate.find(";");
                     indexes.push_back(c);
                     flag = false;
+                    string subintermediate = intermediate.substr(c + 1, intermediate.size());
+                    while (subintermediate.find(";") != std::string::npos)
+                    {
+                        int s = subintermediate.find(";");
+                        indexes.push_back(c + 1 + s);
+                        subintermediate = subintermediate.substr(s + 1, intermediate.size());
+                    }
                 }
                 if (intermediate.find("{") != std::string::npos)
                 {
                     int c = intermediate.find("{");
                     indexes.push_back(c);
                     flag = false;
+                    string subintermediate = intermediate.substr(c + 1, intermediate.size());
+                    while (subintermediate.find("{") != std::string::npos)
+                    {
+                        int s = subintermediate.find("{");
+                        indexes.push_back(c + 1 + s);
+                        subintermediate = subintermediate.substr(s + 1, intermediate.size());
+                    }
                 }
                 if (intermediate.find("}") != std::string::npos)
                 {
                     int c = intermediate.find("}");
                     indexes.push_back(c);
                     flag = false;
+                    string subintermediate = intermediate.substr(c + 1, intermediate.size());
+                    while (subintermediate.find("}") != std::string::npos)
+                    {
+                        int s = subintermediate.find("}");
+                        indexes.push_back(c + 1 + s);
+                        subintermediate = subintermediate.substr(s + 1, intermediate.size());
+                    }
+                }
+                if (intermediate.find("\"") != std::string::npos)
+                {
+                    int c = intermediate.find("\"");
+                    indexes.push_back(c);
+                    flag = false;
+                    cout << endl ;
+                    cout << "intermediate: " << intermediate << endl ;
+                    string subintermediate = intermediate.substr(c + 1, intermediate.size());
+                    cout << "subintermediate: " << subintermediate << " -- char: " << intermediate.at(c) << endl ;
+                    while (subintermediate.find("\"") != std::string::npos)
+                    {
+                        int s = subintermediate.find("\"");
+                        indexes.push_back(c + 1 + s);
+                        subintermediate = subintermediate.substr(s + 1, intermediate.size());
+                    }
+                    //cout << endl ;
+                    cout << "indexes: " << endl;
+                    for (int i = 0; i < indexes.size(); i++)
+                        cout << indexes[i] << ",";
+                    cout << endl;   
                 }
                 if (flag == true)
                 {
@@ -124,14 +221,21 @@ int main(int argc, char **argv)
                     }
                     for (int i = 0; i < indexes.size(); i++)
                     {
+                        cout << "Inside for loop" << endl;
+                        //cout << "intermediate: " << intermediate << endl;
+                        cout << "i: " << i << ", indexes[i]: " << indexes[i] << endl;
+
                         if (i == 0)
                         {
                             if (indexes[i] != 0)
                             {
-                                tokens.push_back(intermediate.substr(0, indexes[i]));
+                                int len = indexes[i];
+                                tokens.push_back(intermediate.substr(0, len));
+                                //tokens.push_back(intermediate.substr(0, indexes[i]));
                                 string s;
                                 s.push_back(intermediate.at(indexes[i]));
-                                tokens.push_back(s);
+                                if(s.size()!=0)
+                                    tokens.push_back(s);
                             }
                             if (indexes.size() == 1)
                             {
@@ -141,39 +245,55 @@ int main(int argc, char **argv)
                                     {
                                         string s;
                                         s.push_back(intermediate.at(indexes[i]));
-                                        tokens.push_back(s);
+                                        if(s.size()!=0)
+                                            tokens.push_back(s);
                                     }
-                                    ////cout << "3 -- " << intermediate.substr((indexes[i] + 1), intermediate.size()) + "\n";
-                                    tokens.push_back(intermediate.substr((indexes[i] + 1), intermediate.size()));
-                                    ////cout << "4 -- " << intermediate.at(indexes[i]) << endl;
+                                    int len = intermediate.size() - indexes[i];
+                                    string inp = intermediate.substr((indexes[i] + 1), len);
+                                    if(inp.size()!=0)
+                                        tokens.push_back(inp);
+                                    //tokens.push_back(intermediate.substr((indexes[i] + 1), intermediate.size()));
                                 }
                             }
                         }
                         else if (i == (indexes.size() - 1))
                         {
-
-                            string a = intermediate.substr((indexes[i - 1] + 1), indexes[i]);
-                            string b = intermediate.substr((indexes[i] + 1), intermediate.size());
+                            int lena = indexes[i] - (indexes[i - 1] + 1);
+                            string a = intermediate.substr((indexes[i - 1] + 1), lena);
+                            //string a = intermediate.substr((indexes[i - 1] + 1), indexes[i]);
+                            int lenb = intermediate.size() - (indexes[i] + 1);
+                            string b = intermediate.substr((indexes[i] + 1), lenb);
+                            //string b = intermediate.substr((indexes[i] + 1), intermediate.size());
+                            cout << "a: " << a << ", b: " << b << endl;
                             if ((indexes[i - 1] + 1) != indexes[i])
-                            {
-                                tokens.push_back(a);
+                            {   
+                                if(a.size()!=0)
+                                    tokens.push_back(a);
                             }
                             string s;
                             s.push_back(intermediate.at(indexes[i]));
-                            tokens.push_back(s);
+                            if(s.size()!=0)
+                                tokens.push_back(s);
                             if (b.size() != 0)
                                 tokens.push_back(b);
                         }
                         else
                         {
-                            tokens.push_back(intermediate.substr((indexes[i - 1] + 1), indexes[i]));
+                            int len = indexes[i] - (indexes[i - 1] + 1);
+                            string b = intermediate.substr((indexes[i-1] + 1), len);
+                            cout << "in else, b: " << b << endl;
+                            if(b.size()!=0)
+                                tokens.push_back(b);
+                            //tokens.push_back(intermediate.substr((indexes[i - 1] + 1), indexes[i]));
                             string s;
                             s.push_back(intermediate.at(indexes[i]));
-                            tokens.push_back(s);
+                            if(s.size()!=0)
+                                tokens.push_back(s);
                         }
                     }
                 }
             }
+            tokens.push_back("EndOfLine");
         }
         cout << "\n----- AFTER TOKENIZING(TOKENS): -----\n\n";
         for (int i = 0; i < tokens.size(); i++)
