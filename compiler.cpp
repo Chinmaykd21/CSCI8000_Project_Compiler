@@ -91,7 +91,7 @@ int main(int argc, char **argv)
 
     int input_size = sizeof(argv[1]) / sizeof(char);
     string input = convertToString(argv[1], input_size);
-    cout<<input<<endl;
+  
     newfile.open(input, ios::in);
 
     if (newfile.is_open())
@@ -363,11 +363,9 @@ int main(int argc, char **argv)
 
         if (opBrackets == false){
             cout << "Not all brackets are closed properly." << endl;
-            return -1;
         }
         if (opColons == false){
             cout << "Missing semi-colon in a statement." << endl;
-            return -1;
         }
     }
     else
