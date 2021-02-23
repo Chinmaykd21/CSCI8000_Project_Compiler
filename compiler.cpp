@@ -15,6 +15,68 @@ string convertToString(char *a, int size)
     }
     return s;
 }
+
+bool checksemicolon(vector<string> tokens)
+{
+    for (int i = 0; i < tokens.size(); i++)
+    {
+        //This will be checked for ";"
+        if (tokens[i] == "EndOfLine")
+        {
+            //This condition will check if the element before the word "EndOfLine" does not contains {,},>
+
+            string prevChar = tokens[i - 1];
+            if (prevChar == "{" || prevChar == "}" || prevChar == ">"){}
+            else if (prevChar == ")")
+            {
+                if (tokens[i + 1] == "{"){}
+            }
+            else if (prevChar != ";")
+            {
+                cout << tokens[i - 1] << endl;
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool checkbrackets(vector<string> tokens)
+{
+    int openbraces = 0;
+    int closebraces = 0;
+    int openbrackets = 0;
+    int closebrackets = 0;
+
+    for (int i = 0; i < tokens.size(); i++)
+    {
+        //This code will ensure that all the { brackets have equal number of } or even for ( )
+        if (tokens[i] == "{")
+        {
+            openbraces++;
+        }
+        else if (tokens[i] == "(")
+        {
+            openbrackets++;
+        }
+        else if (tokens[i] == "}")
+        {
+            closebraces++;
+        }
+        else if (tokens[i] == ")")
+        {
+            closebrackets++;
+        }
+    }
+
+    if ((openbraces != closebraces) || (openbrackets != closebrackets))
+    {
+        openbraces = 0, closebraces = 0, openbrackets = 0, closebrackets = 0;
+        return false;
+    }
+    return true;
+}
+
 int main(int argc, char **argv)
 {
 
@@ -29,7 +91,7 @@ int main(int argc, char **argv)
 
     int input_size = sizeof(argv[1]) / sizeof(char);
     string input = convertToString(argv[1], input_size);
-
+  
     newfile.open(input, ios::in);
 
     if (newfile.is_open())
@@ -57,11 +119,6 @@ int main(int argc, char **argv)
                         indexes.push_back(c + 1 + s);
                         subintermediate = subintermediate.substr(s + 1, intermediate.size());
                     }
-                    //cout << endl ;
-                    /*cout << "indexes: " << endl;
-                    for (int i = 0; i < indexes.size(); i++)
-                        cout << indexes[i] << ",";
-                    cout << endl;   */
                 }
 
                 if (intermediate.find("=") != std::string::npos)
@@ -299,11 +356,21 @@ int main(int argc, char **argv)
         for (int i = 0; i < tokens.size(); i++)
             cout << tokens[i] << '\n';
         newfile.close(); //close the file object.
+
+        // Below code will do the syntax analysis.
+        bool opBrackets = checkbrackets(tokens);
+        bool opColons = checksemicolon(tokens);
+
+        if (opBrackets == false){
+            cout << "Not all brackets are closed properly." << endl;
+        }
+        if (opColons == false){
+            cout << "Missing semi-colon in a statement." << endl;
+        }
     }
     else
     {
         cout << "File not found!" << endl;
     }
-
     return 0;
 }

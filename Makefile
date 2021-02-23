@@ -4,7 +4,7 @@ CC = g++
 # Compiler flags:
 #   -g      - This flag adds deubgging information to the executable file
 #   -Wall   - This flag is used to turn on most computer warnings
-CFLAGS = -g -Wall
+CFLAGS = -g
 
 all: mycompiler
 
