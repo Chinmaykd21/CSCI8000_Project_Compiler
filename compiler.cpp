@@ -122,22 +122,8 @@ bool areParenthesisBalanced(vector<string> tokens, unordered_map<int, int> *imap
     }
     cout << endl;
 
-    /*cout << endl ;
-    for (auto x : umap)
-        cout << x.first << " " << x.second << endl;
-
-    cout << "------temp" << endl;
-    for (int k = 0; k < temp.size(); k++)
-    {
-        cout <<  temp[k];
-    }
-    cout << endl;
-    cout << "------temp" << endl;*/
-
     *imap = umap;
 
-    //cout << "End function areParenthesisBalanced--" << endl;
-    // Check Empty Stack
     return (s.empty());
 }
 
@@ -173,11 +159,7 @@ vector<string> Tokenize(string input)
                         indexes.push_back(c + 1 + s);
                         subintermediate = subintermediate.substr(s + 1, intermediate.size());
                     }
-                    //cout << endl ;
-                    /*cout << "indexes: " << endl;
-                    for (int i = 0; i < indexes.size(); i++)
-                        cout << indexes[i] << ",";
-                    cout << endl;   */
+
                 }
 
                 if (intermediate.find("=") != std::string::npos)
