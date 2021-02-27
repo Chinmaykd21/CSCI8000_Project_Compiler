@@ -16,9 +16,9 @@ bool checkParameters(std::string parameters){
         getline(s_stream, substr, ',');
         result.push_back(substr);
     }
-    for(int i=0; i< result.size();i++){
+    /*for(int i=0; i< result.size();i++){
         cout<< result[i]<< endl;
-    }    
+    } */   
     return true;
 }
 
@@ -60,7 +60,7 @@ bool checkFunction(std::vector<std::string> tokens){
                         j++;
                     }
                 }
-                cout << parameters << endl;
+                //cout << parameters << endl;
                 // This function will check all the parameters follow the appropriate declaration format or not. Uncomment it after it is defined
                 if (parameters.size() != 0){
                     flagParameters = checkParameters(parameters);
@@ -76,11 +76,11 @@ bool checkFunction(std::vector<std::string> tokens){
         // count++;
     }
     if ((returnType==true) && (functionName == true) && (flagParameters == true)){
-        cout<<"END TRUE"<<endl;
+        //cout<<"END TRUE"<<endl;
         return true;
     }
     else{
-        cout<<"END FALSE"<<endl;
+        //cout<<"END FALSE"<<endl;
         return false;
     }
 }
@@ -106,7 +106,7 @@ bool checksemicolon(std::vector<std::string> tokens)
             }
             else if (prevChar != ";")
             {
-                cout << "i: " << i << " " << tokens[i - 1] << endl;
+                //cout << "i: " << i << " " << tokens[i - 1] << endl;
                 return false;
             }
         }
@@ -189,9 +189,82 @@ bool areParenthesisBalanced(std::vector<std::string> tokens, std::unordered_map<
             }
         }
     }
-    cout << endl;
+    //cout << endl;
 
     *imap = umap;
 
     return (s.empty());
+}
+
+std::string checkIfElseSyntax(int start, int end, std::vector<std::string> tokens, std::unordered_map<int, int> parenthesisMap)
+{
+    //cout << endl;
+    //cout << "start: " << start << ", end: " << end << endl;
+    for (int i = start; i < end; i++)
+    {
+        if (tokens[i] == "if")
+        {
+            //cout << "Found If, i: " << i << endl;
+
+            if (i < (end - 2))
+            {
+                if (tokens[i + 1] == "(")
+                {
+                    //cout << "I" << endl;
+                    int closeBracket = i+5;
+                    if(i<(end-1)){
+                    auto it = parenthesisMap.find(i + 1);
+                    //cout << "I--" << endl;
+                    if(it->second){
+                        //cout << "I..." << endl;
+                        closeBracket = it->second;
+                    }
+                    }
+                    //cout << "I1" << endl;
+                    ////////////Insert Code to check the conditional statement////////////////
+                    /*bool check = checkIfConditionalStatement(i+2,closeBracket,tokens);
+                if(!check){
+                    return "Syntax error: Invalid condition in if statement";
+                }*/
+
+                    if ((tokens[closeBracket + 1] == "{") && ((closeBracket + 1) < (end - 1)))
+                    {
+                        //cout << "II" << endl;
+
+                        if((closeBracket+1)<end-1){
+                        auto it = parenthesisMap.find(closeBracket + 1);
+                        int closeParNum = i+10;//it->second;
+
+                        //cout << "----Recursive call start----" << endl;
+                        string op = checkIfElseSyntax(closeBracket + 2, closeParNum, tokens, parenthesisMap);
+                        //cout << "----Recursive call end----" << endl;
+                        }
+                    }
+                    else
+                        return "Syntax error: Missing {";
+                }
+                else
+                    return "Syntax error: Missing (";
+            }
+            else 
+                return "syntax error";
+        }
+        else if (tokens[i] == "else")
+        {
+            if (tokens[i + 1] == "{")
+            {
+                auto it = parenthesisMap.find(i + 1);
+                int closeParNum = it->second;
+                //cout << "----Recursive call start----" << endl;
+                string op = checkIfElseSyntax(i + 2, closeParNum, tokens, parenthesisMap);
+                //cout << "----Recursive call end----" << endl;
+            }
+            else if (tokens[i + 1] == "if")
+            {
+            }
+            else
+                return "Syntax error: invalid else condition";
+        }
+    }
+    return "no error";
 }

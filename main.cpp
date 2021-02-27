@@ -3,8 +3,8 @@
 #include <bits/stdc++.h>
 #include <cctype>
 #include <cstring>
-#include "lexicalAnalysis.h"
 #include "syntaxAnalysis.h"
+#include "lexicalAnalysis.h"
 using namespace std;
 
 int main(int argc, char **argv)
@@ -24,8 +24,8 @@ int main(int argc, char **argv)
 
     tokens = Tokenize(input); //tokenize the input file
 
-    unordered_map<int, int> imap;
-    bool opParenthesis = areParenthesisBalanced(tokens, &imap); // check Parenthesis
+    unordered_map<int, int> parenthesisMap;
+    bool opParenthesis = areParenthesisBalanced(tokens, &parenthesisMap); // check Parenthesis
     bool opFunction = checkFunction(tokens); // check function
     bool opColons = checksemicolon(tokens); //check Semicolon
 
@@ -35,4 +35,8 @@ int main(int argc, char **argv)
         cout << "Syntax error: Missing semi-colon in a statement." << endl;
     else if (opFunction == false) 
             cout << "Please check the function definition properly." << endl;
+    else{
+    string ieVal = checkIfElseSyntax(0, tokens.size(), tokens, parenthesisMap);
+    cout << "ieVal: " << ieVal << endl;
+    }
 }
