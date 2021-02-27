@@ -13,7 +13,7 @@ C++
 
 # How to run
 ###### run the following command to compile the compiler.cpp file
-> make all
+> make
 
 ###### once the compilation is successful, run the following command
 > ./compiler file.cpp
