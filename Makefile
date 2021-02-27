@@ -8,8 +8,16 @@ CFLAGS = -g
 
 all: mycompiler
 
-mycompiler: 
-	$(CC) $(CFLAGS) compiler.cpp -o compiler
+mycompiler: main.o lexicalAnalysis.o syntaxAnalysis.o
+	$(CC) $(CFLAGS) main.o lexicalAnalysis.o syntaxAnalysis.o -o compiler
 
+main.o: main.cpp
+	$(CC) $(CFLAGS) main.cpp
+
+lexicalAnalysis.o: lexicalAnalysis.cpp
+	$(CC) $(CFLAGS) lexicalAnalysis.cpp
+
+syntaxAnalysis.o: syntaxAnalysis.cpp
+	$(CC) $(CFLAGS) syntaxAnalysis.cpp
 clean:
 	rm -rf *o compiler
