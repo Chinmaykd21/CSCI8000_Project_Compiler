@@ -9,8 +9,8 @@ LFLAGS = -c
 
 all: mycompiler
 
-mycompiler: main.o lexicalAnalysis.o syntaxAnalysis.o
-	$(CC) $(CFLAGS) main.o lexicalAnalysis.o syntaxAnalysis.o -o compiler
+mycompiler: main.o lexicalAnalysis.o syntaxAnalysis.o parseTree.o
+	$(CC) $(CFLAGS) main.o lexicalAnalysis.o syntaxAnalysis.o parseTree.o -o compiler
 
 main.o: main.cpp
 	$(CC) $(LFLAGS) main.cpp
@@ -20,5 +20,9 @@ lexicalAnalysis.o: lexicalAnalysis.cpp
 
 syntaxAnalysis.o: syntaxAnalysis.cpp
 	$(CC) $(LFLAGS) syntaxAnalysis.cpp
+
+parseTree.o: parseTree.cpp
+	$(CC) $(LFLAGS) parseTree.cpp
+
 clean:
 	rm -rf *o compiler
