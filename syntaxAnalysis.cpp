@@ -114,9 +114,9 @@ bool checksemicolon(std::vector<std::string> tokens)
     return true;
 }
 
-bool areParenthesisBalanced(std::vector<std::string> tokens, std::unordered_map<int, int> *imap)
+bool areParenthesisBalanced(vector<string> tokens, unordered_map<int, int> *imap)
 {
-    stack<char> t;
+    stack<int> t;
     int t1;
     stack<string> s;
     string x;
@@ -136,6 +136,7 @@ bool areParenthesisBalanced(std::vector<std::string> tokens, std::unordered_map<
                 // Push the element in the stack
                 s.push(tokens[i]);
                 t.push(i);
+                int p = t.top();
                 temp.push_back(tokens[i]);
                 continue;
             }
@@ -196,7 +197,77 @@ bool areParenthesisBalanced(std::vector<std::string> tokens, std::unordered_map<
     return (s.empty());
 }
 
-std::string checkIfElseSyntax(int start, int end, std::vector<std::string> tokens, std::unordered_map<int, int> parenthesisMap)
+bool checkIfConditionalStatement(int start, int end, vector<string> tokens)
+{
+
+    if ((end - start) == 3)
+    {
+        for (int a = start; a < end; a++)
+        {
+            if ((a == start) || (a == end - 1))
+            {
+                string checkChar = tokens[a];
+                for (int k = 0; k < checkChar.size(); k++)
+                {
+                    if (((int(checkChar[k]) >= 65) && (int(checkChar[k]) <= 90)) || ((int(checkChar[k]) >= 97) && (int(checkChar[k] <= 122))))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                if ((tokens[a] != "<") && (tokens[a] != ">"))
+                {
+                    return false;
+                }
+            }
+        }
+    }
+    else if ((end - start) == 4)
+    {
+        for (int a = start; a < end; a++)
+        {
+            if ((a == start) || (a == end - 1))
+            {
+                string checkChar = tokens[a];
+                for (int k = 0; k < checkChar.size(); k++)
+                {
+                    if (((int(checkChar[k]) >= 65) && (int(checkChar[k]) <= 90)) || ((int(checkChar[k]) >= 97) && (int(checkChar[k] <= 122))))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else if (a = 1)
+            {
+                if ((tokens[a] != "<") && (tokens[a] != ">") && (tokens[a] != "=") && (tokens[a] != "!"))
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (tokens[a] != "=")
+                {
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
+}
+
+string checkIfElseSyntax(int start, int end, vector<string> tokens, unordered_map<int, int> parenthesisMap)
 {
     //cout << endl;
     //cout << "start: " << start << ", end: " << end << endl;
@@ -211,14 +282,16 @@ std::string checkIfElseSyntax(int start, int end, std::vector<std::string> token
                 if (tokens[i + 1] == "(")
                 {
                     //cout << "I" << endl;
-                    int closeBracket = i+5;
-                    if(i<(end-1)){
-                    auto it = parenthesisMap.find(i + 1);
-                    //cout << "I--" << endl;
-                    if(it->second){
-                        //cout << "I..." << endl;
-                        closeBracket = it->second;
-                    }
+                    int closeBracket = i + 5;
+                    if (i < (end - 1))
+                    {
+                        auto it = parenthesisMap.find(i + 1);
+                        //cout << "I--" << endl;
+                        if (it->second)
+                        {
+                            //cout << "I..." << endl;
+                            closeBracket = it->second;
+                        }
                     }
                     //cout << "I1" << endl;
                     ////////////Insert Code to check the conditional statement////////////////
@@ -231,13 +304,14 @@ std::string checkIfElseSyntax(int start, int end, std::vector<std::string> token
                     {
                         //cout << "II" << endl;
 
-                        if((closeBracket+1)<end-1){
-                        auto it = parenthesisMap.find(closeBracket + 1);
-                        int closeParNum = i+10;//it->second;
+                        if ((closeBracket + 1) < end - 1)
+                        {
+                            auto it = parenthesisMap.find(closeBracket + 1);
+                            int closeParNum = it->second; //i+10
 
-                        //cout << "----Recursive call start----" << endl;
-                        string op = checkIfElseSyntax(closeBracket + 2, closeParNum, tokens, parenthesisMap);
-                        //cout << "----Recursive call end----" << endl;
+                            //cout << "----Recursive call start----" << endl;
+                            string op = checkIfElseSyntax(closeBracket + 2, closeParNum, tokens, parenthesisMap);
+                            //cout << "----Recursive call end----" << endl;
                         }
                     }
                     else
@@ -246,7 +320,7 @@ std::string checkIfElseSyntax(int start, int end, std::vector<std::string> token
                 else
                     return "Syntax error: Missing (";
             }
-            else 
+            else
                 return "syntax error";
         }
         else if (tokens[i] == "else")
