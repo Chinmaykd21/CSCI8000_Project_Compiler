@@ -16,6 +16,6 @@ C++
 > make
 
 ###### once the compilation is successful, run the following command
-> ./compiler inp1.cpp
+./compiler in/inp1.cpp
 
-inp1.cpp /inp2.cpp /inp3.cpp are the files which are to be compiled by our compiler.
+inp1.cpp, inp2.cpp, inp3.cpp are the files in "in" folder which are to be compiled by our compiler.
