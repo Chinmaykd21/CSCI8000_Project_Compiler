@@ -259,7 +259,7 @@ void parseTree(int start, int end, vector<string> tokens, unordered_map<int, int
 
                             if (tokens[j] == "\"")
                             {
-                                int closeQuotes;
+                                int closeQuotes= 0; // code fixed according to github issue uninitialized variable #11
                                 string stringVal = "\"";
                                 for (int k = j + 1; k < end; k++)
                                 {
