@@ -1,0 +1,2 @@
+bool is_number(const std::string &s);
+void parseTree(int start, int end, std::vector<std::string> tokens, std::unordered_map<int, int> parenthesisMap, std::unordered_map<std::string, std::string> varTypeMap, std::string indent);

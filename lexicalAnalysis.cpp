@@ -6,17 +6,6 @@
 #include "lexicalAnalysis.h"
 using namespace std;
 
-std::string convertToString(char *a, int size)
-{
-    int i;
-    string s = "";
-    for (i = 0; i < size; i++)
-    {
-        s = s + a[i];
-    }
-    return s;
-}
-
 std::vector<std::string> Tokenize(std::string input)
 {
     vector<string> tokens;
@@ -49,7 +38,6 @@ std::vector<std::string> Tokenize(std::string input)
                         indexes.push_back(c + 1 + s);
                         subintermediate = subintermediate.substr(s + 1, intermediate.size());
                     }
-
                 }
 
                 if (intermediate.find("=") != std::string::npos)
@@ -302,16 +290,17 @@ std::vector<std::string> Tokenize(std::string input)
             {
                 tokens.push_back("EndOfLine");
             }
-           
         }
         /*cout << "\n----- AFTER TOKENIZING(TOKENS): -----\n\n";
         for (int i = 0; i < tokens.size(); i++)
             cout << tokens[i] << '\n';*/
-        newfile.close(); //close the file object.
     }
     else
     {
-        cout << "File not found!" << endl;
+        cout << input << ": No such file or path exists.\n"<< endl;
+        cout << "Usage: ./compiler arg1\n"<< endl;
+        cout << "arg1: path_to_file/file_name OR file_name" << endl;
     }
+    newfile.close(); //close the file object.
     return tokens;
 }

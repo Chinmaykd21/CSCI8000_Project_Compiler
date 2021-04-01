@@ -5,6 +5,7 @@
 #include <cstring>
 #include "syntaxAnalysis.h"
 #include "lexicalAnalysis.h"
+#include "parseTree.h"
 using namespace std;
 
 int main(int argc, char **argv)
@@ -12,17 +13,12 @@ int main(int argc, char **argv)
 
     if (argc <= 1)
     {
-        cout << "Input file missing!" << endl;
+        cout << "Usage: ./compiler arg1\n" << endl;
+        cout << "arg1: path_to_file/file_name OR file_name" << endl;
         return 0;
     }
-
-    fstream newfile;
     vector<string> tokens;
-
-    int input_size = sizeof(argv[1]) / sizeof(char);
-    string input = convertToString(argv[1], input_size);
-
-    tokens = Tokenize(input); //tokenize the input file
+    tokens = Tokenize(argv[1]); //tokenize the input file
 
     unordered_map<int, int> parenthesisMap;
     bool opParenthesis = areParenthesisBalanced(tokens, &parenthesisMap); // check Parenthesis
@@ -36,7 +32,9 @@ int main(int argc, char **argv)
     else if (opFunction == false) 
             cout << "Please check the function definition properly." << endl;
     else{
-    string ieVal = checkIfElseSyntax(0, tokens.size(), tokens, parenthesisMap);
-    cout << "ieVal: " << ieVal << endl;
+    //string ieVal = checkIfElseSyntax(0, tokens.size(), tokens, parenthesisMap);
+    //cout << "ieVal: " << ieVal << endl;
+    unordered_map<string, string> varTypeMAp;
+    parseTree(0, tokens.size(), tokens, parenthesisMap, varTypeMAp, "-");
     }
 }
