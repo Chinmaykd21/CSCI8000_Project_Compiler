@@ -892,7 +892,7 @@ void parseTree(int start, int end, vector<string> tokens, unordered_map<int, int
         {
             if (!is_number(tokens[i]))
             {
-               // cout << "I" << endl;
+                // cout << "I" << endl;
                 if (tokens[i + 1] == "(")
                 {
                     string fnName = tokens[i];
@@ -911,7 +911,7 @@ void parseTree(int start, int end, vector<string> tokens, unordered_map<int, int
                     //cout << "III here: " << it -> second << endl;
                     int closeBracNum = it->second;
                     //cout << "IV here" << endl;
-                    
+
                     cout << indent << " call fn " << tokens[i] << endl;
                     indent.append("-");
                     for (int j = openBracNum + 1; j < closeBracNum; j++)
@@ -923,7 +923,7 @@ void parseTree(int start, int end, vector<string> tokens, unordered_map<int, int
                             {
                                 // code fix based on github issue - Uninitialized variable - start
                                 // int closeQuotes;
-                                int closeQuotes = 0; 
+                                int closeQuotes = 0;
                                 // code fix based on github issue - Uninitialized variable - end
                                 string stringVal = "\"";
                                 for (int k = j + 1; k < end; k++)
@@ -955,10 +955,11 @@ void parseTree(int start, int end, vector<string> tokens, unordered_map<int, int
                                 //cout << "fnNAme: " << fnName << endl;
                                 if (fnName == "scanf")
                                 {
-                                   // cout << "I-" << endl;
-                                    if(tokens[j].substr(0,1)=="&"){
+                                    // cout << "I-" << endl;
+                                    if (tokens[j].substr(0, 1) == "&")
+                                    {
                                         key = tokens[j].substr(1);
-                                       // cout << "II-" << endl;
+                                        // cout << "II-" << endl;
                                     }
                                 }
                                 else
@@ -966,13 +967,16 @@ void parseTree(int start, int end, vector<string> tokens, unordered_map<int, int
                                     //cout << "II" << endl;
                                     key = tokens[j];
                                 }
-                               // cout << "key: " << key << endl;
+                                // cout << "key: " << key << endl;
                                 auto it1 = newVarTypeMap.find(key);
-                                 //cout << "VI" << endl;
+                                //cout << "VI" << endl;
                                 //cout << it1->second << endl;
-                                string type = it1->second;
-                                //cout << "VII" << endl;
-                                cout << indent << " arg " << type << " " << key << endl;
+                                if (it1 != newVarTypeMap.end()) //code fixed acc to issue:Invalid memory dereference #13
+                                {
+                                    string type = it1->second;
+                                    //cout << "VII" << endl;
+                                    cout << indent << " arg " << type << " " << key << endl;
+                                }
                             }
                         }
                     }
